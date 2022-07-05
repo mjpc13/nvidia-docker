@@ -1,0 +1,35 @@
+name: build base image
+
+on:
+  push:
+    tags:
+      - 'base-v*' # Push events to matching base-v*
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
+        cuda: [11.2.0, 11.7.0]
+        exclude:
+          - os: ubuntu-18.04
+            cuda: 11.7.0
+          - os: ubuntu-22.04
+            cuda: 11.2.0
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: login to docker hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: build and push the image
+        run: |
+          docker buildx build --push \
+            --tag ${{secrets.DOCKER_USERNAME}}/nvidia:${{matrix.cuda}}-base-${{matrix.os}} \
+            --platform linux/amd64, linux/arm64 \
+            --build-arg UBUNTU_VERSION=${{matrix.os}} CUDA_VERSION=${{matrix.cuda}}.
