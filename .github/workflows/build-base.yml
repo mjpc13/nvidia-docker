@@ -3,7 +3,8 @@ name: build base image
 on:
   push:
     tags:
-      - 'base-v*' # Push events to matching base-v*
+      - 'base-v*' # Push events to matching base-v*2
+  workflow_dispatch:
 
 jobs:
   build:
