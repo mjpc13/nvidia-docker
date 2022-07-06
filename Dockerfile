@@ -23,9 +23,18 @@ RUN apt-get update \
     nano 
 
 # Install Nsight System
-RUN apt install nsight-systems
+RUN if [ "$UBUNTU_VERSION" = "ubuntu18.04" ]; \
+    then curl https://ubuntu.pkgs.org/18.04/cuda-amd64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb.html &&\
+         dpkg -i nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb; \
+    elif [ "$UBUNTU_VERSION" = "ubuntu20.04" ]; \
+    then curl https://ubuntu.pkgs.org/20.04/cuda-amd64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb.html &&\
+         dpkg -i nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb; \
+    else curl https://ubuntu.pkgs.org/22.04/cuda-amd64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb.html &&\
+         dpkg -i nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb; \
+    fi
+
 
 # Clean-up
-RUN apt-get clean
+RUN apt-get clean && rm -rf nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb
 
 CMD ["bash"]
