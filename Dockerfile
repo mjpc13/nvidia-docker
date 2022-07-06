@@ -1,7 +1,7 @@
 ARG ARCH=
 ARG UBUNTU_VERSION= 
 ARG CUDA_VERSION=
-FROM ${ARCH}nvidia/cuda:${CUDA_VERSION}-base-${UBUNTU_VERSION}
+FROM ${ARCH}nvidia/cuda:${CUDA_VERSION}-devel-${UBUNTU_VERSION}
 
 LABEL maintainer="Mario Cristovao <mjpc13@protonmail.com>"
 
@@ -21,6 +21,9 @@ RUN apt-get update \
     wget \
     vim \
     nano 
+
+# Install Nsight System
+RUN apt install nsight-systems
 
 # Clean-up
 RUN apt-get clean

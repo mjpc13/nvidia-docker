@@ -3,7 +3,7 @@ name: build base image
 on:
   push:
     tags:
-      - 'base-v*' # Push events to matching base-v*2
+      - 'devel-v*' # Push events to matching base-v*2
   workflow_dispatch:
 
 jobs:
@@ -13,8 +13,6 @@ jobs:
         os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
         cuda: [11.2.0, 11.7.0]
         exclude:
-          - os: ubuntu-18.04
-            cuda: 11.7.0
           - os: ubuntu-22.04
             cuda: 11.2.0
         include:
@@ -38,6 +36,6 @@ jobs:
       - name: build and push the image
         run: |
           docker buildx build --push \
-            --tag ${{secrets.DOCKER_USERNAME}}/cuda:${{matrix.cuda}}-base-${{matrix.cuda-os}} \
+            --tag ${{secrets.DOCKER_USERNAME}}/cuda:${{matrix.cuda}}-devel-${{matrix.cuda-os}} \
             --platform linux/amd64,linux/arm64 \
             --build-arg UBUNTU_VERSION=${{matrix.cuda-os}} --build-arg CUDA_VERSION=${{matrix.cuda}} .
