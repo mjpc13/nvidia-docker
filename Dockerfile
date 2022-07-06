@@ -5,7 +5,6 @@ FROM ${ARCH}nvidia/cuda:${CUDA_VERSION}-devel-${UBUNTU_VERSION}
 
 LABEL maintainer="Mario Cristovao <mjpc13@protonmail.com>"
 
-#ENV ROS_PYTHON_VERSION=3
 ENV DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash","-c"]
@@ -23,16 +22,23 @@ RUN apt-get update \
     vim \
     nano 
 
+# Dependencies for glvnd and X11.
+RUN apt-get update \
+  && apt-get install -y -qq --no-install-recommends \
+    libglvnd0 \
+    libgl1 \
+    libglx0 \
+    libegl1 \
+    libxext6 \
+    libx11-6 \
+  && rm -rf /var/lib/apt/lists/*# Env vars for the nvidia-container-runtime.
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+
 # Install Nsight System
-RUN if [ "$UBUNTU_VERSION" = "ubuntu18.04" ]; \
-    then curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb --output nsight-systems.deb; \
-    elif [ "$UBUNTU_VERSION" = "ubuntu20.04" ]; \
-    then curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb --output nsight-systems.deb; \
-    else curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb --output nsight-systems.deb; \
-    fi
-RUN apt install -y ./nsight-systems.deb
+RUN apt-get install -y qt5-default cuda-nsight-systems-11-7
 
 # Clean-up
-RUN apt-get clean && rm -rf nsight-systems.deb
+RUN apt-get clean
 
 CMD ["bash"]
