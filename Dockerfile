@@ -29,8 +29,7 @@ RUN if [ "$UBUNTU_VERSION" = "ubuntu18.04" ]; \
     then curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb --output nsight-systems.deb; \
     else curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/nsight-systems-2022.1.3_2022.1.3.3-1_amd64.deb --output nsight-systems.deb; \
     fi
-RUN dpkg -i nsight-systems.deb
-
+RUN apt install ./nsight-systems.deb
 
 # Clean-up
 RUN apt-get clean && rm -rf nsight-systems.deb
