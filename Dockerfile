@@ -20,6 +20,7 @@ RUN apt-get update \
     git \
     wget \
     vim \
+    apt-get install libnss3 \
     nano 
 
 # Dependencies for glvnd and X11.
