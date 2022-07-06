@@ -36,7 +36,8 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
 
 # Install Nsight System
-RUN apt-get install -y qt5-default cuda-nsight-systems-11-7
+RUN apt-get update -y && \
+    apt-get install -y qt5-default cuda-nsight-systems-11-7
 
 # Clean-up
 RUN apt-get clean
