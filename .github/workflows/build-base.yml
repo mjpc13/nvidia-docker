@@ -10,8 +10,16 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu18.04, ubuntu20.04, ubuntu22.04]
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
+        cuda-os: [ubuntu18.04, ubuntu20.04, ubuntu22.04]
         cuda: [11.2.0, 11.7.0]
+        include:
+          - os: ubuntu-18.04
+            cuda-os: ubuntu18.04
+          - os: ubuntu-20.04
+            cuda-os: ubuntu20.04
+          - os: ubuntu-22.04
+            cuda-os: ubuntu22.04
         exclude:
           - os: ubuntu18.04
             cuda: 11.7.0
@@ -33,4 +41,4 @@ jobs:
           docker buildx build --push \
             --tag ${{secrets.DOCKER_USERNAME}}/nvidia:${{matrix.cuda}}-base-${{matrix.os}} \
             --platform linux/amd64,linux/arm64 \
-            --build-arg UBUNTU_VERSION=${{matrix.os}} --build-arg CUDA_VERSION=${{matrix.cuda}} .
+            --build-arg UBUNTU_VERSION=${{matrix.cuda-os}} --build-arg CUDA_VERSION=${{matrix.cuda}} .
