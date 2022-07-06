@@ -10,18 +10,13 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
+        os: [ubuntu-18.04, ubuntu-20.04]
         cuda: [11.2.0, 11.7.0]
-        exclude:
-          - os: ubuntu-22.04
-            cuda: 11.2.0
         include:
           - os: ubuntu-18.04
             cuda-os: ubuntu18.04
           - os: ubuntu-20.04
             cuda-os: ubuntu20.04
-          - os: ubuntu-22.04
-            cuda-os: ubuntu22.04
 
     runs-on: ${{ matrix.os }}
     steps:
