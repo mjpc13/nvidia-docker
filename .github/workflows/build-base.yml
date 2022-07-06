@@ -33,4 +33,4 @@ jobs:
           docker buildx build --push \
             --tag ${{secrets.DOCKER_USERNAME}}/nvidia:${{matrix.cuda}}-base-${{matrix.os}} \
             --platform linux/amd64,linux/arm64 \
-            --build-arg UBUNTU_VERSION=${{matrix.os}} CUDA_VERSION=${{matrix.cuda}} .
+            --build-arg UBUNTU_VERSION=${{matrix.os}},CUDA_VERSION=${{matrix.cuda}} .
