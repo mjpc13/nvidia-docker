@@ -20,10 +20,12 @@ jobs:
         include:
           - os: ubuntu-18.04
             cuda-os: ubuntu18.04
+            cuda: 11.2.0
           - os: ubuntu-20.04
             cuda-os: ubuntu20.04
           - os: ubuntu-22.04
             cuda-os: ubuntu22.04
+            cuda: 11.7.0
 
     runs-on: ${{ matrix.os }}
     steps:
