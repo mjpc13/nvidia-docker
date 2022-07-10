@@ -14,6 +14,7 @@ RUN apt-get update \
     && apt-get install -y \
     # Basic utilities
     build-essential \
+    software-properties-common \
     apt-utils \
     curl \
     git \
