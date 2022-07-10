@@ -1,9 +1,9 @@
-name: build base image
+name: build and push
 
 on:
   push:
     tags:
-      - 'base-v*' # Push events to matching base-v*2
+      - 'julia-devel-v*' # Push events to matching julia-devel-v*
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04]
-        cuda: [11.2.0, 11.7.0]
+        cuda: [11.2.0, 11.4.0, 11.7.0]
         exclude:
           - os: ubuntu-18.04
             cuda: 11.7.0
