@@ -17,6 +17,8 @@ jobs:
             cuda: 11.7.0
           - os: ubuntu-22.04
             cuda: 11.2.0
+          - os: ubuntu-22.04
+            cuda: 11.4.0
         include:
           - os: ubuntu-18.04
             cuda-os: ubuntu18.04
