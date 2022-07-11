@@ -20,15 +20,16 @@ RUN apt-get update \
     git \
     wget \
     vim \
-    nano 
+    nano \
+    julia
 
 # Install Julia
-RUN \
-  add-apt-repository -y ppa:staticfloat/juliareleases && \
-  add-apt-repository -y ppa:staticfloat/julia-deps && \
-  apt-get update && \
-  apt-get install -y julia && \
-  rm -rf /var/lib/apt/lists/*
+#RUN \
+  #add-apt-repository -y ppa:staticfloat/juliareleases && \
+  #add-apt-repository -y ppa:staticfloat/julia-deps && \
+  #apt-get update && \
+  #apt-get install -y julia
+  #rm -rf /var/lib/apt/lists/*
 
 # Install relevant Julia packages
 RUN julia -e 'using Pkg; Pkg.add(["CUDA", "BenchmarkTools", "FileIO", "JLD2"])'
