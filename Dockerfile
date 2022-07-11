@@ -21,8 +21,7 @@ RUN apt-get update \
     git \
     wget \
     vim \
-    nano \
-    julia
+    nano
 
 # Install Julia
 #RUN \
